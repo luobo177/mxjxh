@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>诚信跳蚤</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 95%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin: 5px 0;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .register-button {
+            background-color: #007bff;
+        }
+        .register-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-container">
+    <h2>不知道叫什么网</h2>
+    <form id="login-form">
+        <input type="text" placeholder="账号" required>
+        <input type="password" placeholder="密码" required>
+        <button type="submit" id="login-button">登录</button>
+        <button type="button" id="register-button">注册</button> <!-- 这里将注册按钮的type设置为button -->
+    </form>
+</div>
+
+<script type="module">
+    import { API_BASE_URL } from './config.js';
+    console.log(API_BASE_URL);
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+        const username = this[0].value;
+        const password = this[1].value;
+
+        fetch(`${API_BASE_URL}/log`,{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json',
+            },
+            body:JSON.stringify({
+                username:username,
+                password:password
+            })
+            .then(response=>resposne.json())
+            .then(data=>{
+                if(data.message==='登陆成功'){
+                    console.log('登录成功',data.user);
+                    window.location.href = 'index.html';
+                }else{
+                    console.error('登录失败',data.message);
+                }
+            })
+            .catch(error=>{
+                console.error('error',error)
+            })
+        });
+    });
+
+    // Handle the register button click event
+    document.getElementById('register-button').addEventListener('click', function() {
+        window.location.href = 'register.html'; // Redirect to register page
+    });
+</script>
+
+</body>
+</html>
