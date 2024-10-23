@@ -57,12 +57,13 @@
 <body>
 
 <div class="login-container">
-    <h2>不知道叫什么网</h2>
+    <h2>杂七杂八网欢迎你~</h2>
     <form id="login-form">
         <input type="text" placeholder="账号" required>
         <input type="password" placeholder="密码" required>
         <button type="submit" id="login-button">登录</button>
-        <button type="button" id="register-button">注册</button> <!-- 这里将注册按钮的type设置为button -->
+        <button type="button" id="register-button" onclick="window.location.href='register.html'">注册</button>
+        <!-- 这里将注册按钮的type设置为button -->
     </form>
 </div>
 
@@ -89,7 +90,7 @@
             console.log(data);
             if(data.message==='登录成功'){
                 console.log('登录成功',data.user);
-                window.location.href = 'index.html';
+                window.location.href = './TZ_index.html';
             }else{
                 console.error('登录失败',data.message);
             }
@@ -98,9 +99,7 @@
             console.error('error',error)
         })
 
-        document.getElementById('register-button').addEventListener('click', function() {
-            window.location.href = 'register.html'; // Redirect to register page
-        }); 
+        
     })
 </script>
 

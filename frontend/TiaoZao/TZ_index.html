@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>跳蚤市场</title>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar__logo">跳蚤市场</div>
+            <ul class="navbar__links">
+                <li><a href="../index.html">首页</a></li>
+                <li><a href="../feedback.html">联系我们</a></li>
+            </ul>
+            <div class="search-container">
+                <input type="text" class="search-container__input" placeholder="搜索商品...">
+                <button type="submit" class="search-container__button">搜索</button>
+            </div>
+            <div class="user-account">
+                <a href="log.html" class="user-account__link">登录</a>
+                <a href="register.html" class="user-account__link">注册</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main>
+        <div id="product-list"></div>
+    </main>
+
+    <script>
+        // 获取商品数据并渲染到页面
+        async function loadProducts() {
+            try {
+                const response = await fetch('/products');
+                const products = await response.json();
+                
+                const productList = document.getElementById('product-list');
+                productList.innerHTML = ''; // 清空现有内容
+    
+                // 遍历商品数据并生成 HTML
+                products.forEach(product => {
+                    const productItem = `
+                        <div class="product">
+                            <img src="${product.image_url}" alt="${product.name}" class="product-image"/>
+                            <h2>${product.name}</h2>
+                            <p>价格: ¥${product.price}</p>
+                            <p>描述: ${product.description}</p>
+                            <p>联系方式: ${product.seller_contact}</p>
+                        </div>
+                    `;
+                    productList.innerHTML += productItem; // 将每个商品加入到页面中
+                });
+            } catch (error) {
+                console.error('加载商品数据失败:', error);
+            }
+        }
+    
+        // 页面加载后调用函数
+        window.onload = loadProducts;
+    </script>
+    
+    
+</body>
+</html>

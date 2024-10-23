@@ -4,65 +4,104 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>跳蚤市场</title>
+    <title>CUIT杂七杂八网</title>
+    <style>
+        /* 基本样式 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .title {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 36px;
+            font-weight: bold;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 每行两个板块 */
+            gap: 20px;
+            max-width: 1200px;
+            margin: 20px;
+        }
+
+        .section {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .section img {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 20px;
+        }
+
+        .section h2 {
+            margin-bottom: 10px;
+        }
+
+        .section p {
+            margin-bottom: 20px;
+        }
+
+        .section a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .section a:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <header class="header">
-        <nav class="navbar">
-            <div class="navbar__logo">跳蚤市场</div>
-            <ul class="navbar__links">
-                <li><a href="index.html">首页</a></li>
-                <li><a href="#">商品分类</a></li>
-                <li><a href="#">联系我们</a></li>
-            </ul>
-            <div class="search-container">
-                <input type="text" class="search-container__input" placeholder="搜索商品...">
-                <button type="submit" class="search-container__button">搜索</button>
-            </div>
-            <div class="user-account">
-                <a href="log.html" class="user-account__link">登录</a>
-                <a href="register.html" class="user-account__link">注册</a>
-                <a href="#" class="user-account__link">购物车 (0)</a>
-            </div>
-        </nav>
-    </header>
-    
-    <main>
-        <div id="product-list"></div>
-    </main>
+    <!-- 网站标题 -->
+    <h1 class="title">CUIT杂七杂八网</h1>
 
-    <script>
-        // 获取商品数据并渲染到页面
-        async function loadProducts() {
-            try {
-                const response = await fetch('/products');
-                const products = await response.json();
-                
-                const productList = document.getElementById('product-list');
-                productList.innerHTML = ''; // 清空现有内容
-    
-                // 遍历商品数据并生成 HTML
-                products.forEach(product => {
-                    const productItem = `
-                        <div class="product">
-                            <img src="${product.image_url}" alt="${product.name}" class="product-image"/>
-                            <h2>${product.name}</h2>
-                            <p>价格: ¥${product.price}</p>
-                            <p>描述: ${product.description}</p>
-                            <p>联系方式: ${product.seller_contact}</p>
-                        </div>
-                    `;
-                    productList.innerHTML += productItem; // 将每个商品加入到页面中
-                });
-            } catch (error) {
-                console.error('加载商品数据失败:', error);
-            }
-        }
-    
-        // 页面加载后调用函数
-        window.onload = loadProducts;
-    </script>
-    
-    
+    <div class="container">
+        <!-- 跳蚤网 -->
+        <div class="section">
+            <h2>跳蚤网</h2>
+            <p>在这里买卖二手物品，找到你需要的宝贝。</p>
+            <a href="./TiaoZao/TZ_index.html">进入跳蚤网</a>
+        </div>
+
+        <!-- 恋爱网 -->
+        <div class="section">
+            <h2>谈恋爱吧</h2>
+            <p>说不定就谈上了捏</p>
+            <a href="./error.html">进入恋爱网</a>
+        </div>
+
+        <!-- 话痨网 -->
+        <div class="section">
+            <h2>今日话题吧</h2>
+            <p>聊点有意思的吧</p>
+            <a href="./error.html">进入今日话题吧</a>
+        </div>
+
+        <!-- 找搭子网 -->
+        <div class="section">
+            <h2>找搭子网</h2>
+            <p>寻找志同道合的小伙伴，一起吃饭、运动、游戏。</p>
+            <a href="./error.html">进入找搭子</a>
+        </div>
+    </div>
 </body>
 </html>
