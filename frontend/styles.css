@@ -107,37 +107,23 @@ body {
     gap: 15px;
 }
 
-.product-container {
-    display: flex;
-    flex-wrap: wrap; /* 允许换行 */
-    gap: 20px; /* 商品卡片之间的间距 */
-    justify-content: center; /* 居中对齐 */
-    margin-top: 20px;
+/*___________________________________________________________________________________________________________________________________________________________*/
+
+#product-list {
+    display: grid; /* 使用 CSS Grid 布局 */
+    grid-template-columns: repeat(4, 1fr); /* 每行 4 列 */
+    gap: 20px; /* 商品之间的间距 */
+    max-height: calc(5 * 250px); /* 设定最大高度，假设每个商品高度约 250px */
+    overflow-y: auto; /* 超出部分可滚动 */
 }
 
-.product-card {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    overflow: hidden; /* 防止内容溢出 */
-    width: 200px; /* 设置卡片宽度 */
+.product {
+    border: 1px solid #ddd; /* 商品边框 */
+    padding: 10px; /* 内边距 */
+    text-align: center; /* 内容居中 */
 }
 
-.product-card__image {
-    width: 100%; /* 图片宽度填满卡片 */
-    height: auto; /* 高度自适应 */
-}
-
-.product-card__description {
-    padding: 15px;
-}
-
-.product-card__title {
-    font-size: 18px;
-    margin: 0 0 10px 0; /* 上下外边距 */
-}
-
-.product-card__text {
-    font-size: 14px;
-    color: #555; /* 描述文字颜色 */
+.product img {
+    width: 100%; /* 图片宽度 100% */
+    height: auto; /* 自适应高度 */
 }
