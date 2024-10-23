@@ -4,13 +4,6 @@ const bodyParser = require('body-parser');
 const db = require('./config.js');
 const router=express.Router();
 
-db.connect((err) => {
-    if (err) {
-        console.error('数据库连接失败:', err);
-    } else {
-        console.log('已连接到数据库');
-    }
-});
 
 router.get('/test', (req, res) => {
     res.send('Test route is working!');

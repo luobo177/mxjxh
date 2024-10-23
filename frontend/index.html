@@ -1,11 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="styles.css">
+    <title>跳蚤市场</title>
 </head>
 <body>
-    shit brodwaaaaaaaaaaaaaa
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar__logo">跳蚤市场</div>
+            <ul class="navbar__links">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="#">商品分类</a></li>
+                <li><a href="#">联系我们</a></li>
+            </ul>
+            <div class="search-container">
+                <input type="text" class="search-container__input" placeholder="搜索商品...">
+                <button type="submit" class="search-container__button">搜索</button>
+            </div>
+            <div class="user-account">
+                <a href="log.html" class="user-account__link">登录</a>
+                <a href="register.html" class="user-account__link">注册</a>
+                <a href="#" class="user-account__link">购物车 (0)</a>
+            </div>
+        </nav>
+    </header>
+    
+    <main class="product-container">
+        <!-- 商品卡片示例 -->
+        <div class="product-card">
+            <img src="product1.jpg" alt="商品1" class="product-card__image">
+            <div class="product-card__description">
+                <h2 class="product-card__title">商品1</h2>
+                <p class="product-card__text">这是商品1的描述，包含一些重要信息。</p>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="product2.jpg" alt="商品2" class="product-card__image">
+            <div class="product-card__description">
+                <h2 class="product-card__title">商品2</h2>
+                <p class="product-card__text">这是商品2的描述，包含一些重要信息。</p>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="product3.jpg" alt="商品3" class="product-card__image">
+            <div class="product-card__description">
+                <h2 class="product-card__title">商品3</h2>
+                <p class="product-card__text">这是商品3的描述，包含一些重要信息。</p>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="product4.jpg" alt="商品4" class="product-card__image">
+            <div class="product-card__description">
+                <h2 class="product-card__title">商品4</h2>
+                <p class="product-card__text">这是商品4的描述，包含一些重要信息。</p>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="product5.jpg" alt="商品5" class="product-card__image">
+            <div class="product-card__description">
+                <h2 class="product-card__title">商品5</h2>
+                <p class="product-card__text">这是商品5的描述，包含一些重要信息。</p>
+            </div>
+        </div>
+
+        <div class="empty-message" style="display: none;">没有商品可显示。</div>
+    </main>
+
+    <script>
+        import {API_BASE_URL} from './config.js';
+        const productContainer = document.querySelector('.product-container');
+        const emptyMessage = document.querySelector('.empty-message');
+    
+        // 从服务器请求商品数据
+        fetch(`${API_BASE_URL}/products`)
+            .then(response => response.json())
+            .then(products => {
+                if (products.length === 0) {
+                    emptyMessage.style.display = 'block'; // 显示空页面提示
+                    productContainer.style.display = 'none'; // 隐藏商品容器
+                } else {
+                    emptyMessage.style.display = 'none'; // 隐藏空页面提示
+                    products.forEach(product => {
+                        // 创建商品卡片并添加到容器中
+                        const card = document.createElement('div');
+                        card.classList.add('product-card');
+                        card.innerHTML = `
+                            <img src="${product.image}" alt="${product.title}" class="product-card__image">
+                            <div class="product-card__description">
+                                <h2 class="product-card__title">${product.title}</h2>
+                                <p class="product-card__text">${product.description}</p>
+                            </div>
+                        `;
+                        productContainer.appendChild(card);
+                    });
+                }
+            })
+            .catch(err => {
+                console.error('请求失败:', err);
+                emptyMessage.textContent = '无法加载商品数据。';
+                emptyMessage.style.display = 'block';
+                productContainer.style.display = 'none';
+            });
+    </script>
+    
 </body>
 </html>

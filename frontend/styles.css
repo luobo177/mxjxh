@@ -1,0 +1,143 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+.header {
+    background-color: #333;
+    color: white;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between; /* 在主轴上分布 */
+    align-items: center; /* 在交叉轴上居中对齐 */
+    padding: 10px 20px;
+}
+
+.navbar__logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.navbar__links {
+    list-style: none;
+    display: flex; /* 使用 flexbox 让链接在一行中显示 */
+    gap: 15px; /* 链接之间的间距 */
+    margin: 0; /* 去掉默认的外边距 */
+    padding: 0; /* 去掉默认的内边距 */
+}
+
+.navbar__links li {
+    display: inline; /* 确保列表项为一行 */
+}
+
+.navbar__links li a {
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+}
+
+.navbar__links li a:hover {
+    background-color: #555;
+    border-radius: 4px;
+}
+
+.search-container {
+    display: flex;
+}
+
+.search-container__input {
+    padding: 5px;
+    border: none;
+    border-radius: 4px;
+}
+
+.search-container__button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-container__button:hover {
+    background-color: #0056b3;
+}
+
+.user-account {
+    display: flex;
+    align-items: center;
+}
+
+.user-account__link {
+    color: white;
+    margin-left: 15px;
+    text-decoration: none;
+}
+
+.user-account__link:hover {
+    text-decoration: underline;
+}
+/*-----------------------------------------------------------------------------------------------------------------------------------------------*/
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 20px;
+}
+
+.header {
+    background-color: #333;
+    color: white;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.navbar__links {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.product-container {
+    display: flex;
+    flex-wrap: wrap; /* 允许换行 */
+    gap: 20px; /* 商品卡片之间的间距 */
+    justify-content: center; /* 居中对齐 */
+    margin-top: 20px;
+}
+
+.product-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* 防止内容溢出 */
+    width: 200px; /* 设置卡片宽度 */
+}
+
+.product-card__image {
+    width: 100%; /* 图片宽度填满卡片 */
+    height: auto; /* 高度自适应 */
+}
+
+.product-card__description {
+    padding: 15px;
+}
+
+.product-card__title {
+    font-size: 18px;
+    margin: 0 0 10px 0; /* 上下外边距 */
+}
+
+.product-card__text {
+    font-size: 14px;
+    color: #555; /* 描述文字颜色 */
+}
