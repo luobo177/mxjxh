@@ -15,7 +15,7 @@ router.post('/log',(req,res)=>{
         return res.status(400).json({message:'用户密码不能为空'});
     }
 
-    const query='select * from users where username=? and password=?'
+    const query='select * from user where name=? and password=?'
     db.query(query,[username,password],(err,results)=>{
         if(err){
             console.error('数据库查询错误',err)

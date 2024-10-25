@@ -93,6 +93,7 @@
                 window.location.href = './TZ_index.html';
             }else{
                 console.error('登录失败',data.message);
+                alert('账户或密码错误')
             }
         })
         .catch(error=>{

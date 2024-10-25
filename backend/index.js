@@ -1,10 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const logRoutes = require('./TiaoZao/log');
-const TZ_index_Routes = require('./TiaoZao/TZ_index');
 const app = express();
 const path = require('path');
 const db = require('./config');
+
+const logRoutes = require('./TiaoZao/log');
+const TZ_indexRoutes = require('./TiaoZao/TZ_index');
+const registerRoutes = require('./TiaoZao/register');
 
 // 提供 frontend 文件夹作为静态文件目录
 app.use(express.static(path.join(__dirname, '../frontend')));
@@ -19,7 +21,9 @@ app.get('/', (req, res) => {
 // 使用 log 路由
 app.use('/', logRoutes);
 
-app.use('/',TZ_index_Routes);
+app.use('/',TZ_indexRoutes);
+
+app.use('/',registerRoutes);
 
 // 启动服务器
 app.listen(3000, () => {

@@ -1,11 +1,161 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>用户注册</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .register-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #666;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #5a67d8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #4c51bf;
+        }
+
+        #message {
+            text-align: center;
+            color: #e53e3e;
+            margin-top: 20px;
+        }
+
+        /* 手机端适配 */
+        @media (max-width: 600px) {
+            .register-container {
+                padding: 20px;
+                max-width: 300px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>注册界面</h1>
+    <div class="register-container">
+        <h1>用户注册</h1>
+        <form id="register-form">
+            <div class="form-group">
+                <label for="username">用户名</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">密码</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm-password">确认密码</label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="contact-information">联系方式(例如qq：12345,微信：111)</label>
+                <input type="text" id="contact-information" required>
+            </div>
+
+            <button type="submit">注册</button>
+        </form>
+
+        <div id="message"></div> <!-- 提示信息 -->
+    </div>
+
+    <script>
+        // 处理注册表单提交
+        document.getElementById('register-form').addEventListener('submit', async function(event) {
+            event.preventDefault();  // 防止页面刷新
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const messageElement = document.getElementById('message');
+            const contact = document.getElementById('contact-information').value;
+
+
+            // 检查密码是否匹配
+            if (password !== confirmPassword) {
+                messageElement.textContent = '密码不匹配，请重新输入';
+                return;
+            }
+
+            // 发送注册请求
+            try {
+                const response = await fetch('/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password, contact })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    messageElement.style.color = 'green';
+                    messageElement.textContent = '注册成功，请登录';
+                    setTimeout(() => {
+                        window.location.href = 'log.html';  // 注册成功后跳转到登录页面
+                    }, 2000);
+                } else {
+                    messageElement.textContent = '注册失败，' + result.message;
+                }
+            } catch (error) {
+                messageElement.textContent = '注册请求失败，请稍后再试';
+                console.error('注册错误:', error);
+            }
+        });
+    </script>
 </body>
 </html>

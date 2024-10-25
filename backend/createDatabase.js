@@ -27,11 +27,29 @@ const createProductsTable = `
                 )
             `;
 
+
+const createUserTable = `
+        CREATE TABLE IF NOT EXISTS user(
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            password VARCHAR(255) NOT NULL,
+            contact VARCHAR(255) NOT NULL
+        )
+`;
+
+db.query(createUserTable,(err,result)=>{
+    if(err){
+        console.log('创建用户表失败');
+        return;
+    }
+    console.log('创建用户表成功');
+})
+
 db.query(createProductsTable,(err,result)=>{
     if(err){
         console.log('创建商品表失败');
         return;
     }
     console.log('创建商品表成功');
-    db.end();
 })
+db.end();
