@@ -23,6 +23,7 @@ const createProductsTable = `
                     description TEXT,
                     seller_contact VARCHAR(255) NOT NULL,
                     seller_id INT NOT NULL,
+                    image VARCHAR(255), -- 新增字段，用于存储图片文件名
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
             `;

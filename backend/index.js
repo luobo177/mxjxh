@@ -4,9 +4,11 @@ const app = express();
 const path = require('path');
 const db = require('./config');
 
+
 const logRoutes = require('./TiaoZao/log');
 const TZ_indexRoutes = require('./TiaoZao/TZ_index');
 const registerRoutes = require('./TiaoZao/register');
+const createCommodityRoutes = require('./TiaoZao/createCommodity')
 
 // 提供 frontend 文件夹作为静态文件目录
 app.use(express.static(path.join(__dirname, '../frontend')));
@@ -24,6 +26,8 @@ app.use('/', logRoutes);
 app.use('/',TZ_indexRoutes);
 
 app.use('/',registerRoutes);
+
+app.use('/',createCommodityRoutes);
 
 // 启动服务器
 app.listen(3000, () => {
