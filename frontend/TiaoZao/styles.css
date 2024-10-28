@@ -16,9 +16,16 @@ body {
 }
 
 .navbar__logo {
-    font-size: 24px;
-    font-weight: bold;
+    color: #ebe2e2; /* 文字颜色 */
+    text-decoration: none; /* 移除下划线 */
+    font-weight: bold; /* 文字加粗 */
+    cursor: pointer;
 }
+
+.navbar__logo:hover {
+    color: #4c51bf; /* 鼠标悬停时的颜色 */
+}
+
 
 .navbar__links {
     list-style: none;
@@ -69,7 +76,22 @@ body {
 .user-account {
     display: flex;
     align-items: center;
+    gap: 20px; /* 链接间距 */
 }
+
+.user-account a {
+    text-decoration: none;
+    color: #f2efef; /* 深色字体 */
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.user-account a:hover {
+    background-color: #1c1919; /* 鼠标悬停效果 */
+}
+
 
 .user-account__link {
     color: white;

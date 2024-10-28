@@ -6,12 +6,10 @@ const router = express.Router();
 
 // 配置 multer 存储
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, path.join(__dirname, '/uploads'));
-    },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname); // 保证文件名唯一
-    }
+        const uniqueFilename = Date.now() + '-' + file.originalname;
+        cb(null, uniqueFilename); // 只存文件名
+    }    
 });
 
 const upload = multer({ storage: storage });

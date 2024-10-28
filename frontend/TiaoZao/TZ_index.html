@@ -9,7 +9,7 @@
 <body>
     <header class="header">
         <nav class="navbar">
-            <div class="navbar__logo">跳蚤市场</div>
+            <a href="TZ_index.html" class="navbar__logo">跳蚤市场</a>
             <ul class="navbar__links">
                 <li><a href="../index.html">首页</a></li>
                 <li><a href="../feedback.html">联系我们</a></li>
@@ -19,10 +19,12 @@
                 <button type="submit" class="search-container__button">搜索</button>
             </div>
             <div class="user-account">
+                <span id="welcome-message"></span> <!-- 显示欢迎信息 -->
+                <a href="myCommodity.html" class="myCommodity">我的商品</a>
                 <a href="createCommodity.html" class="create_sp">创建商品</a>
-                <a href="log.html" class="user-account__link">登录</a>
-                <a href="register.html" class="user-account__link">注册</a>
+                <a href="log.html" id="auth-link" class="user-account__link">登录</a> <!-- 登录/注销 -->
             </div>
+            
         </nav>
     </header>
     
@@ -32,6 +34,33 @@
 
     <script>
         // 获取商品数据并渲染到页面
+        // 在页面加载时检查用户登录状态
+        document.addEventListener('DOMContentLoaded', function() {
+            const storedUserInfo = localStorage.getItem('userInfo');
+            const authLink = document.getElementById('auth-link');
+            const welcomeMessage = document.getElementById('welcome-message');
+
+            if (storedUserInfo) {
+                const userInfo = JSON.parse(storedUserInfo);
+                welcomeMessage.textContent = `你好, ${userInfo.name}`; // 显示欢迎信息
+                authLink.textContent = '注销'; // 改变链接文本为“注销”
+                
+                // 注销功能
+                authLink.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    localStorage.removeItem('userInfo'); // 清除用户信息
+                    authLink.textContent = '登录'; // 改变链接文本为“登录”
+                    welcomeMessage.textContent = ''; // 清除欢迎信息
+                });
+            } else {
+                authLink.textContent = '登录'; // 默认显示“登录”
+                authLink.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    window.location.href = 'log.html'; // 导航到登录页面
+                });
+            }
+        });
+
         async function loadProducts() {
             try {
                 const response = await fetch('/products');
@@ -44,7 +73,7 @@
                 products.forEach(product => {
                     const productItem = `
                         <div class="product">
-                            <img src="${product.image_url}" alt="${product.name}" class="product-image"/>
+                            <img src="/uploads/${product.image}" alt="${product.name}" class="product-image"/>
                             <h2>${product.name}</h2>
                             <p>价格: ¥${product.price}</p>
                             <p>描述: ${product.description}</p>

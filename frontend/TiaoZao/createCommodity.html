@@ -9,21 +9,18 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f9;
-            display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
             padding: 0;
         }
-
         .commodity-container {
-            background-color: white;
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            width: 100%;
+            display: flex; /* 使用弹性布局 */
+            justify-content: center; /* 水平居中 */
+            align-items: center; /* 垂直居中 */
+            flex-direction: column; /* 纵向排列 */
+            min-height: 100vh; /* 最小高度为视口高度 */
         }
 
         h1 {
@@ -84,6 +81,7 @@
     </style>
 </head>
 <body>
+    <div id="header-placeholder"></div>
     <div class="commodity-container">
         <h1>创建商品</h1>
         <form id="create-commodity-form" enctype="multipart/form-data">
@@ -115,6 +113,17 @@
 
     <script type="module">
         import { API_BASE_URL } from './config.js';
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('header.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header-placeholder').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('Error loading header:', error);
+                });
+        });
+        
         const storedUserInfo = localStorage.getItem('userInfo');
         let seller_contact, seller_id;
         if (storedUserInfo) {
@@ -163,7 +172,7 @@
                 // 处理返回的数据
                 console.log(data);
                 alert('商品创建成功');
-                // 这里可以根据需要重定向到其他页面
+                window.location.href = './TZ_index.html';
             })
             .catch(error => {
                 alert('商品创建失败');
