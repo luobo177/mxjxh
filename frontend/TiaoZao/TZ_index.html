@@ -74,10 +74,11 @@
                     const productItem = `
                         <div class="product">
                             <img src="../${product.image}" alt="${product.name}" class="product-image"/>
-                            <h2>${product.name}</h2>
-                            <p>价格: ¥${product.price}</p>
-                            <p>描述: ${product.description}</p>
-                            <p>联系方式: ${product.seller_contact}</p>
+                            <div class="product-info">
+                                <h2 class="product-name">"${product.name}"</h2>
+                                <p class="product-price">￥${product.price}</p>
+                            </div>
+                            <a href="product_detail.html?id=1" class="detail-button">查看详情</a>
                         </div>
                     `;
                     console.log(product.image);
