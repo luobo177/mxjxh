@@ -11,6 +11,7 @@ const registerRoutes = require('./TiaoZao/register');
 const createCommodityRoutes = require('./TiaoZao/createCommodity');
 const myCommodityRoutes = require('./TiaoZao/myCommodity');
 const editCommodityRoutes = require('./TiaoZao/editCommodity');
+const queryCommodityRouts = require('./TiaoZao/commodity_detail');
 
 // 使用 cors 中间件
 app.use(cors({
@@ -42,6 +43,7 @@ app.use('/', registerRoutes);
 app.use('/', createCommodityRoutes);
 app.use('/', myCommodityRoutes);
 app.use('/', editCommodityRoutes);
+app.use('/',queryCommodityRouts);
 
 // 启动服务器
 app.listen(80, '0.0.0.0', () => {

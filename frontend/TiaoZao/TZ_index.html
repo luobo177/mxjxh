@@ -33,6 +33,9 @@
     </main>
 
     <script>
+        window.onload = function() {
+            location.reload();
+        };
         // 获取商品数据并渲染到页面
         // 在页面加载时检查用户登录状态
         document.addEventListener('DOMContentLoaded', function() {
@@ -78,10 +81,9 @@
                                 <h2 class="product-name">"${product.name}"</h2>
                                 <p class="product-price">￥${product.price}</p>
                             </div>
-                            <a href="product_detail.html?id=1" class="detail-button">查看详情</a>
+                            <a href="commodity_detail.html?id=${product.id}" class="detail-button">查看详情</a>
                         </div>
                     `;
-                    console.log(product.image);
                     productList.innerHTML += productItem; // 将每个商品加入到页面中
                 });
             } catch (error) {

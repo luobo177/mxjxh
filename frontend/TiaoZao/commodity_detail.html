@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>商品详细信息</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .product-image {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        h1 {
+            margin: 0;
+        }
+        .price {
+            color: #007bff;
+            font-size: 24px;
+            margin: 10px 0;
+        }
+        .description {
+            margin: 20px 0;
+        }
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="name" class="name"></h1>
+        <img id="image" src="" alt="商品图片" class="product-image">
+        <div id="price" class="price"></div>
+        <div>
+            <h2>商品描述</h2>
+            <p id="description" class="description"></p>
+            <h3>卖家信息</h3>
+            <p id="seller_contact"></p>
+        </div>
+        <a href="TZ_index.html" class="back-button">返回首页</a>
+    </div>
+</body>
+<script type="module">
+    import {API_BASE_URL} from './config.js';
+    function getParameterByName(name) {
+        const url = new URL(window.location.href);
+        return url.searchParams.get(name);
+    }
+    const productId = getParameterByName('id');
+    fetch(`${API_BASE_URL}/queryProductById?id=${productId}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            const product = data[0];
+            document.getElementById('name').textContent = product.name;
+            document.getElementById('price').textContent = `价格: ¥${product.price}`;
+            document.getElementById('description').textContent = product.description;
+            document.getElementById('image').src = `../${product.image}`;
+            document.getElementById('seller_contact').textContent=product.seller_contact;
+        })
+        .catch(error => {
+            console.error('Error fetching product details:', error);
+        });
+</script>
+</html>
