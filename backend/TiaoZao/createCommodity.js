@@ -4,15 +4,20 @@ const multer = require('multer');
 const path = require('path');
 const router = express.Router();
 
-// 配置 multer 存储
 const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        const uploadPath = path.join(__dirname,'uploads');
+        console.log('Upload path:', uploadPath); // 打印路径
+        cb(null, uploadPath);
+    },
     filename: function (req, file, cb) {
         const uniqueFilename = Date.now() + '-' + file.originalname;
-        cb(null, uniqueFilename); // 只存文件名
-    }    
+        cb(null, uniqueFilename);
+    }
 });
 
 const upload = multer({ storage: storage });
+
 
 // SQL 插入语句
 const createCommodity = `
@@ -22,8 +27,14 @@ const createCommodity = `
 
 // 使用 POST 请求来创建商品
 router.post('/create-commodity', upload.single('image'), (req, res) => {
+    
     const { name, price, description, seller_contact, seller_id } = req.body;
-    const imagePath = req.file ? req.file.path : null; // 获取上传的文件路径
+    if (!req.file) {
+        return res.status(400).json('请上传有效的文件');
+    }
+    const imagePath = 'TZuploads/' + req.file.filename; // 确保正确设置图片路径
+    console.log('上传成功:', imagePath);
+
 
     // 验证请求体中的必要字段
     if (!name || !price || !seller_contact || !seller_id || !imagePath) {
