@@ -3,75 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="index_css.css">
     <title>CUIT冒险家协会</title>
     <style>
-        /* 基本样式 */
-        body {
-            background-image: url(./img/index_img2.jpg);
-            background-size: cover;
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
 
-        .title {
-            text-align: center;
-            margin: 20px 0;
-            font-size: 36px;
-            font-weight: bold;
-        }
-
-        .container {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr); /* 每行两个板块 */
-            gap: 20px;
-            max-width: 1200px;
-            margin: 20px;
-        }
-
-        .section {
-            background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.8), rgba(240, 240, 240, 0.5)); /* 背景渐变 */
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        .section img {
-            width: 100px;
-            height: 100px;
-            margin-bottom: 20px;
-        }
-
-        .section h2 {
-            margin-bottom: 10px;
-        }
-
-        .section p {
-            margin-bottom: 20px;
-        }
-
-        .section a {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            border-radius: 5px;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
-
-        .section a:hover {
-            background-color: #0056b3;
-        }
     </style>
 </head>
+<header class="header">
+    <nav class="navbar">
+        <div class="A"><li><a href="首页">首页</a></li></div>
+        <div class="page">
+            <li><a>跳蚤市场</a></li>
+            <li><a>任务榜</a></li>
+            <li><a>拍卖行</a></li>
+            <li><a>谈恋爱吧</a></li>
+            <li><a>今日话题吧</a></li>
+            <li><a>找搭子吧</a></li>
+            <li><a>学习资料吧</a></li>
+        </div>
+        <div class="log_register"><li>
+            <span id="welcome-message"></span> <!-- 显示欢迎信息 -->
+            <li><a href="log.html" id="auth-link" class="user-account__link">登录</a> </li>
+            <li><a href="register.html" id="register-link">注册</a></li>
+        </div>
+    </nav>
+</header>
 <body>
     <!-- 网站标题 -->
     <h1 class="title">CUIT冒险家协会</h1>
@@ -82,6 +38,12 @@
             <h2>跳蚤网</h2>
             <p>在这里买卖二手物品，找到你需要的宝贝。</p>
             <a href="./TiaoZao/TZ_index.html">进入跳蚤网</a>
+        </div>
+
+        <div class="section">
+            <h2>任务榜</h2>
+            <p>发布任务，接取任务</p>
+            <a href="./error.html">发布任务</a>
         </div>
 
         <div class="section">
@@ -110,6 +72,45 @@
             <p>寻找志同道合的小伙伴，一起吃饭、运动、游戏。</p>
             <a href="./error.html">进入找搭子</a>
         </div>
+        
+        <div class="section">
+            <h2>学习资料吧</h2>
+            <p>看看有没有你想要的吧</p>
+            <a href="./error.html">学习资料吧</a>
+        </div>
+
     </div>
 </body>
+<script>
+
+    // 获取商品数据并渲染到页面
+    // 在页面加载时检查用户登录状态
+    document.addEventListener('DOMContentLoaded', function() {
+        const storedUserInfo = localStorage.getItem('userInfo');
+        const authLink = document.getElementById('auth-link');
+        const registerlink = document.getElementById('register-link');
+        const welcomeMessage = document.getElementById('welcome-message');
+
+        if (storedUserInfo) {
+            const userInfo = JSON.parse(storedUserInfo);
+            welcomeMessage.textContent = `你好, ${userInfo.name}`; // 显示欢迎信息
+            authLink.textContent = '注销'; // 改变链接文本为“注销”
+            registerlink.style.display='none';
+            // 注销功能
+            authLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                localStorage.removeItem('userInfo'); // 清除用户信息
+                authLink.textContent = '登录'; // 改变链接文本为“登录”
+                welcomeMessage.textContent = ''; // 清除欢迎信息
+                registerLink.style.display = 'inline'; // 恢复注册链接显示
+            });
+        } else {
+            authLink.textContent = '登录'; // 默认显示“登录”
+            authLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                window.location.href = 'log.html'; // 导航到登录页面
+            });
+        }
+    });
+</script>
 </html>
