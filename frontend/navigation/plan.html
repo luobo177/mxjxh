@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计划</title>
+    <style>
+        /* 页面容器样式 */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100%;
+            background-color: #f8f8f8;
+            overflow-y: auto;
+        }
+
+        /* 按钮样式 */
+        .button {
+            position: absolute;
+            top: 5%;
+            left: 75%;
+            width: 10%;
+            height: 5%;
+            border-radius: 5px;
+            color: aliceblue;
+            background-color: rgb(12, 12, 12);
+            border: 0px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .button:hover {
+            color: rgb(2, 15, 15);
+            background-color: rgb(138, 94, 156);
+        }
+
+        /* 表格容器样式 */
+        .table-container {
+            background-color: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 70%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: rgb(230, 230, 230);
+        }
+
+        td {
+            background-color: #fff;
+        }
+
+        /* 弹窗样式 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.3s ease;
+        }
+
+        /* 背景模糊 */
+        .modal-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(5px); /* 模糊效果 */
+        }
+
+        /* 弹窗内容 */
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 400px;
+            max-width: 90%;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transform: translateY(-30px);
+            opacity: 0;
+            animation: fadeIn 0.5s forwards;
+        }
+
+        /* 弹窗关闭按钮 */
+        #closeModal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* 输入框和按钮 */
+        input, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* 动画：弹窗渐显效果 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="table-container">
+            <table id="taskTable">
+                <thead>
+                    <tr>
+                        <th>事件</th>
+                        <th>备注</th>
+                        <th>截止时间</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 动态填充的任务行 -->
+                </tbody>
+            </table>
+        </div>
+        <button id="createPlan" class="button">创建计划</button>
+    </div>
+
+    <!-- 创建任务弹窗 -->
+    <div id="myModal" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <span id="closeModal" style="cursor: pointer;">&times;</span>
+            <h2>创建任务</h2>
+            <form id="createTaskForm">
+                <input type="text" id="event" placeholder="事件" ><br>
+                <input type="date" id="deadline" required><br>
+                <textarea id="remark" placeholder="备注" ></textarea><br>
+                <button type="submit">提交</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module">
+        import { API_BASE_URL } from '../config.js';
+        const storedUserInfo = localStorage.getItem('userInfo');
+        console.log(storedUserInfo);
+        const userInfo = JSON.parse(storedUserInfo);
+        const id=userInfo.id;
+        if (storedUserInfo==null) {
+            alert('请先登录');
+            window.location.href='./log.html';
+        }
+        const createPlan = document.getElementById("createPlan");
+        const myModal = document.getElementById("myModal");
+        const closeModal = document.getElementById("closeModal");
+        const createTaskForm = document.getElementById("createTaskForm");
+        const taskTable = document.getElementById("taskTable").getElementsByTagName("tbody")[0];
+
+        // 弹窗打开
+        createPlan.addEventListener("click", function() {
+            myModal.style.display = "flex";
+            setTimeout(() => {
+                myModal.style.opacity = "1"; // 弹窗渐显
+            }, 10); // 给一个小延迟以便触发动画
+        });
+
+        // 关闭弹窗
+        closeModal.addEventListener("click", function() {
+            myModal.style.opacity = "0"; // 弹窗渐隐
+            setTimeout(() => {
+                myModal.style.display = "none";
+            }, 300); // 给出渐隐的时间
+        });
+
+        // 提交任务
+        createTaskForm.addEventListener("submit", function() {
+            const event = document.getElementById("event").value;
+            const deadline = document.getElementById("deadline").value;
+            const remark = document.getElementById("remark").value;
+            // 向后端发送请求，提交新任务
+            fetch(`${API_BASE_URL}/tasks`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({id, event, deadline, remark})
+            })
+            .then(response => {
+                if (response.success) {
+                    alert('任务创建成功！');
+                    loadTasks();  // 重新加载任务数据
+                    myModal.style.opacity = "0";  // 弹窗渐隐
+                    setTimeout(() => {
+                        myModal.style.display = "none";  // 关闭弹窗
+                    }, 300);
+                }
+            });
+        });
+
+        // 加载任务数据并填充表格
+        function loadTasks() {
+            fetch(`${API_BASE_URL}/getPlan?id=${id}`)
+            .then(response => response.json())
+            .then(results => {
+                taskTable.innerHTML = '';  // 清空表格内容
+                results.data.forEach(task => {
+                    const row = taskTable.insertRow();
+                    row.insertCell(0).textContent = task.event;
+                    row.insertCell(1).textContent = task.remark;
+                    
+                    // 检查 task.deadline 是否有效，并将其格式化为 YYYY-MM-DD
+                    let deadline = task.deadline;
+                    if (deadline) {
+                        // 如果是字符串，转换为 Date 对象
+                        if (typeof deadline === 'string') {
+                            deadline = new Date(deadline);
+                        }
+                        
+                        // 确保 deadline 是一个有效的 Date 对象
+                        if (deadline instanceof Date && !isNaN(deadline)) {
+                            row.insertCell(2).textContent = deadline.toISOString().split('T')[0];
+                        } else {
+                            row.insertCell(2).textContent = '无效日期'; // 或者可以设置为空
+                        }
+                    } else {
+                        row.insertCell(2).textContent = '无日期';
+                    }
+                });
+            });
+        }
+
+
+        // 页面加载时获取任务数据
+        loadTasks();
+    </script>
+</body>
+</html>

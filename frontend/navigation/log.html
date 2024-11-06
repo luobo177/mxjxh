@@ -68,7 +68,7 @@
 </div>
 
 <script type="module">
-    import { API_BASE_URL } from './config.js';
+    import { API_BASE_URL } from '../config.js';
     console.log(API_BASE_URL);
     document.getElementById('login-form').addEventListener('submit', function(event) {
         event.preventDefault(); // Prevent the default form submission
@@ -94,7 +94,7 @@
                 name: data.user.name,
                 contact: data.user.contact
             }));
-                window.location.href = './index.html';
+                window.location.href = '../index.html';
             }else{
                 console.error('登录失败',data.message);
                 alert('账户或密码错误')

@@ -1,7 +1,7 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const db = require('./config.js');
+const db = require('../config.js');
 const router=express.Router();
 
 

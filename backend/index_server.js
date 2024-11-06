@@ -7,9 +7,9 @@ const http = require('http'); // 引入 http 模块
 const path = require('path');
 const db = require('./config');
 
-const logRoutes = require('./TiaoZao/log');
+const logRoutes = require('./log');
 const TZ_indexRoutes = require('./TiaoZao/TZ_index');
-const registerRoutes = require('./TiaoZao/register');
+const registerRoutes = require('./register');
 const createCommodityRoutes = require('./TiaoZao/createCommodity');
 const myCommodityRoutes = require('./TiaoZao/myCommodity');
 const editCommodityRoutes = require('./TiaoZao/editCommodity');

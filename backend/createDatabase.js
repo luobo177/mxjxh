@@ -37,7 +37,14 @@ const createUserTable = `
             contact VARCHAR(255) NOT NULL
         )
 `;
-
+const createTask = `
+    CREATE TABLE IF NOT EXISTS task(
+        id INT NOT NULL,
+        event VARCHAR(1000) NOT NULL,
+        remark VARCHAR(1000),
+        deadline DATE NOT NULL
+    )
+`;
 db.query(createUserTable,(err,result)=>{
     if(err){
         console.log('创建用户表失败');
@@ -52,5 +59,13 @@ db.query(createProductsTable,(err,result)=>{
         return;
     }
     console.log('创建商品表成功');
+})
+
+db.query(createTask,(err,result)=>{
+    if(err){
+        console.log('创建任务表失败');
+        return;
+    }
+    console.log('创建任务表成功');
 })
 db.end();

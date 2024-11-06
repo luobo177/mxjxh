@@ -13,18 +13,13 @@
     <nav class="navbar">
         <div class="A"><li><a href="首页">首页</a></li></div>
         <div class="page">
-            <li><a>跳蚤市场</a></li>
-            <li><a>任务榜</a></li>
-            <li><a>拍卖行</a></li>
-            <li><a>谈恋爱吧</a></li>
-            <li><a>今日话题吧</a></li>
-            <li><a>找搭子吧</a></li>
-            <li><a>学习资料吧</a></li>
+            <li><a href="navigation/plan.html">计划</a></li>
+            <li><a href="navigation/classtable.html">课表</a></li>
         </div>
         <div class="log_register"><li>
             <span id="welcome-message"></span> <!-- 显示欢迎信息 -->
-            <li><a href="log.html" id="auth-link" class="user-account__link">登录</a> </li>
-            <li><a href="register.html" id="register-link">注册</a></li>
+            <li><a href="./navigation/log.html" id="auth-link" class="user-account__link">登录</a> </li>
+            <li><a href="./navigation/register.html" id="register-link">注册</a></li>
         </div>
     </nav>
 </header>
@@ -108,7 +103,7 @@
             authLink.textContent = '登录'; // 默认显示“登录”
             authLink.addEventListener('click', function(event) {
                 event.preventDefault();
-                window.location.href = 'log.html'; // 导航到登录页面
+                window.location.href = './navigation/log.html'; // 导航到登录页面
             });
         }
     });

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const db = require('./config');  // 数据库配置
+const db = require('../config');  // 数据库配置
 
 router.post('/register', (req, res) => {
     const { username, password, contact } = req.body;

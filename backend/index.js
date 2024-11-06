@@ -5,13 +5,14 @@ const app = express();
 const path = require('path');
 const db = require('./config');
 
-const logRoutes = require('./log');
+const logRoutes = require('./navigation/log');
+const registerRoutes = require('./navigation/register');
 const TZ_indexRoutes = require('./TiaoZao/TZ_index');
-const registerRoutes = require('./register');
 const createCommodityRoutes = require('./TiaoZao/createCommodity');
 const myCommodityRoutes = require('./TiaoZao/myCommodity');
 const editCommodityRoutes = require('./TiaoZao/editCommodity');
 const queryCommodityRouts = require('./TiaoZao/commodity_detail');
+const createPlan = require('./navigation/plan');
 
 // 使用 cors 中间件
 app.use(cors({
@@ -44,6 +45,7 @@ app.use('/', createCommodityRoutes);
 app.use('/', myCommodityRoutes);
 app.use('/', editCommodityRoutes);
 app.use('/',queryCommodityRouts);
+app.use('/',createPlan);
 
 // 启动服务器
 app.listen(80, '0.0.0.0', () => {
