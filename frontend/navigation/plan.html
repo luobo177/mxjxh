@@ -153,6 +153,7 @@
                         <th>事件</th>
                         <th>备注</th>
                         <th>截止时间</th>
+                        <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -181,7 +182,6 @@
     <script type="module">
         import { API_BASE_URL } from '../config.js';
         const storedUserInfo = localStorage.getItem('userInfo');
-        console.log(storedUserInfo);
         const userInfo = JSON.parse(storedUserInfo);
         const id=userInfo.id;
         if (storedUserInfo==null) {
@@ -243,29 +243,65 @@
                 taskTable.innerHTML = '';  // 清空表格内容
                 results.data.forEach(task => {
                     const row = taskTable.insertRow();
+                    const eventId = task.eventID; // 存储任务的 ID
+                    // 插入任务的其他信息
                     row.insertCell(0).textContent = task.event;
                     row.insertCell(1).textContent = task.remark;
-                    
-                    // 检查 task.deadline 是否有效，并将其格式化为 YYYY-MM-DD
+
+                    // 处理 deadline
                     let deadline = task.deadline;
                     if (deadline) {
                         // 如果是字符串，转换为 Date 对象
                         if (typeof deadline === 'string') {
                             deadline = new Date(deadline);
                         }
-                        
+
                         // 确保 deadline 是一个有效的 Date 对象
                         if (deadline instanceof Date && !isNaN(deadline)) {
-                            row.insertCell(2).textContent = deadline.toISOString().split('T')[0];
+                            const currentDate = new Date();
+                            if (deadline < currentDate) {
+                                row.insertCell(2).textContent = '已经过期';
+                            } else {
+                                row.insertCell(2).textContent = deadline.toISOString().split('T')[0];
+                            }
                         } else {
-                            row.insertCell(2).textContent = '无效日期'; // 或者可以设置为空
+                            row.insertCell(2).textContent = '无效日期';
                         }
                     } else {
                         row.insertCell(2).textContent = '无日期';
                     }
+
+                    // 创建修改和删除按钮
+                    const actionCell = row.insertCell(3);  // 插入一个新的单元格用于按钮
+                    // 创建删除按钮
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = '删除';
+                    deleteButton.classList.add('delete-btn');
+                    deleteButton.addEventListener('click', function() {
+                        if (confirm('确认删除任务吗？')) {
+                            // 使用 fetch 发起请求，并等待删除操作完成
+                            fetch(`${API_BASE_URL}/deleteTask?taskId=${eventId}`,{
+                                method:'DELETE',
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data.message === 'success') {
+                                        location.reload();
+                                    } else {
+                                        alert('任务删除失败');
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('删除任务时发生错误:', error);
+                                    alert('删除任务时发生错误');
+                                });
+                        }
+                    });
+                    actionCell.appendChild(deleteButton);
                 });
             });
         }
+
 
 
         // 页面加载时获取任务数据

@@ -39,6 +39,7 @@ const createUserTable = `
 `;
 const createTask = `
     CREATE TABLE IF NOT EXISTS task(
+        eventID INT AUTO_INCREMENT PRIMARY KEY,
         id INT NOT NULL,
         event VARCHAR(1000) NOT NULL,
         remark VARCHAR(1000),
