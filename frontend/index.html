@@ -11,16 +11,17 @@
 </head>
 <header class="header">
     <nav class="navbar">
-        <div class="A"><li><a href="首页">首页</a></li></div>
+        <div class="A"><li><a href="">首页</a></li></div>
         <div class="page">
             <li><a href="navigation/plan.html">计划</a></li>
             <li><a href="navigation/classtable.html">课表</a></li>
         </div>
-        <div class="log_register"><li>
-            <span id="welcome-message"></span> <!-- 显示欢迎信息 -->
-            <li><a href="./navigation/log.html" id="auth-link" class="user-account__link">登录</a> </li>
+        <div class="log_register">
+            <li><span id="welcome-message"></span></li> <!-- 显示欢迎信息 -->
+            <li><a href="./navigation/log.html" id="auth-link" class="user-account__link">登录</a></li>
             <li><a href="./navigation/register.html" id="register-link">注册</a></li>
         </div>
+        
     </nav>
 </header>
 <body>
@@ -97,7 +98,7 @@
                 localStorage.removeItem('userInfo'); // 清除用户信息
                 authLink.textContent = '登录'; // 改变链接文本为“登录”
                 welcomeMessage.textContent = ''; // 清除欢迎信息
-                registerLink.style.display = 'inline'; // 恢复注册链接显示
+                registerlink.style.display = 'inline'; // 恢复注册链接显示
             });
         } else {
             authLink.textContent = '登录'; // 默认显示“登录”

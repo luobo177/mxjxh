@@ -183,11 +183,11 @@
         import { API_BASE_URL } from '../config.js';
         const storedUserInfo = localStorage.getItem('userInfo');
         const userInfo = JSON.parse(storedUserInfo);
-        const id=userInfo.id;
         if (storedUserInfo==null) {
             alert('请先登录');
             window.location.href='./log.html';
         }
+        const id=userInfo.id;
         const createPlan = document.getElementById("createPlan");
         const myModal = document.getElementById("myModal");
         const closeModal = document.getElementById("closeModal");

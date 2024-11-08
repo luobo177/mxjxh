@@ -83,6 +83,11 @@
     </div>
 
     <script type="module">
+        const storedUserInfo = localStorage.getItem('userInfo');
+        if (storedUserInfo==null) {
+            alert('请先登录');
+            window.location.href='../navigation/log.html';
+        }
         //导入导航栏
         document.addEventListener('DOMContentLoaded', () => {
             fetch('header.html')
