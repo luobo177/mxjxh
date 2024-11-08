@@ -14,7 +14,7 @@ const createCommodityRoutes = require('./TiaoZao/createCommodity');
 const myCommodityRoutes = require('./TiaoZao/myCommodity');
 const editCommodityRoutes = require('./TiaoZao/editCommodity');
 const queryCommodityRouts = require('./TiaoZao/commodity_detail');
-
+const createPlan = require('./navigation/plan');
 // 加载证书和私钥
 const options = {
     key: fs.readFileSync('/etc/letsencrypt/live/cuitmxjxh.top/privkey.pem'),
@@ -68,6 +68,6 @@ app.use('/', createCommodityRoutes);
 app.use('/', myCommodityRoutes);
 app.use('/', editCommodityRoutes);
 app.use('/', queryCommodityRouts);
-
+app.use('/',createPlan);
 // 启动服务器
 // 这里不需要再调用 app.listen(80) 了，因为我们已经在上面创建了一个 HTTP 服务器来处理重定向
