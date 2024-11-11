@@ -38,10 +38,23 @@ http.createServer((req, res) => {
 
 // 使用 cors 中间
 app.use(cors({
-    origin: ['https://www.cuitmxjxh.top', 'http://www.cuitmxjxh.top'], // 允许的来源
+    origin: function(origin, callback) {
+        const allowedOrigins = [
+            'https://cuitmxjxh.top',
+            'https://www.cuitmxjxh.top',
+            'http://cuitmxjxh.top',
+            'http://www.cuitmxjxh.top'
+        ];
+        if (allowedOrigins.includes(origin) || !origin) {
+            callback(null, true); // 允许请求
+        } else {
+            callback(new Error('Not allowed by CORS'), false);
+        }
+    },
     methods: ['GET', 'POST', 'DELETE'],
-    credentials: true
+    credentials: true,
 }));
+
 
 // 提供 frontend 文件夹作为静态文件目录
 app.use(express.static(path.join(__dirname, '../frontend')));
