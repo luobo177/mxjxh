@@ -99,6 +99,10 @@
                 authLink.textContent = '登录'; // 改变链接文本为“登录”
                 welcomeMessage.textContent = ''; // 清除欢迎信息
                 registerlink.style.display = 'inline'; // 恢复注册链接显示
+                authLink.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    window.location.href = './navigation/log.html'; // 导航到登录页面
+                });
             });
         } else {
             authLink.textContent = '登录'; // 默认显示“登录”
