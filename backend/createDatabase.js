@@ -1,5 +1,5 @@
 const db = require('./config')
-db.query('Create DATABASE IF NOT EXISTS tiaozao',(err,result)=>{
+db.query('Create DATABASE IF NOT EXISTS mxjxh',(err,result)=>{
     if (err){
         console.log('数据库创建失败',err);
         return;
@@ -7,7 +7,7 @@ db.query('Create DATABASE IF NOT EXISTS tiaozao',(err,result)=>{
     console.log('数据库创建成功或者已存在');
 })
 
-db.changeUser({database:'tiaozao'},err=>{
+db.changeUser({database:'mxjxh'},err=>{
     if(err){
         console.log('切换数据库失败');
         return;
