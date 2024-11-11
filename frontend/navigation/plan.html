@@ -211,29 +211,41 @@
         });
 
         // 提交任务
-        createTaskForm.addEventListener("submit", function() {
-            const event = document.getElementById("event").value;
-            const deadline = document.getElementById("deadline").value;
-            const remark = document.getElementById("remark").value;
+        // 提交任务
+        createTaskForm.addEventListener("submit", function(event) {
+            event.preventDefault();  // 防止表单默认提交行为
+            
+            const eventValue = document.getElementById("event").value;
+            const deadlineValue = document.getElementById("deadline").value;
+            const remarkValue = document.getElementById("remark").value;
+
             // 向后端发送请求，提交新任务
             fetch(`${API_BASE_URL}/tasks`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({id, event, deadline, remark})
+                body: JSON.stringify({id, event: eventValue, deadline: deadlineValue, remark: remarkValue})
             })
-            .then(response => {
-                if (response.success) {
+            .then(response => response.json())  // 确保返回 JSON
+            .then(data => {
+                if (data.success) {
                     alert('任务创建成功！');
                     loadTasks();  // 重新加载任务数据
                     myModal.style.opacity = "0";  // 弹窗渐隐
                     setTimeout(() => {
                         myModal.style.display = "none";  // 关闭弹窗
                     }, 300);
+                } else {
+                    alert('任务创建失败，请稍后再试！');
                 }
+            })
+            .catch(error => {
+                console.error('任务创建请求错误:', error);
+                alert('创建任务时发生错误，请稍后再试');
             });
         });
+
 
         // 加载任务数据并填充表格
         function loadTasks() {
