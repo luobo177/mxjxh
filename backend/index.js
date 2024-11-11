@@ -16,9 +16,10 @@ const createPlan = require('./navigation/plan');
 
 // 使用 cors 中间件
 app.use(cors({
-    origin: 'http://www.cuitmxjxh.top', // 允许的来源
-    methods: ['GET', 'POST','DELETE'], // 允许的方法
+    origin: ['https://cuitmxjxh.top', 'http://cuitmxjxh.top'],
+    methods: ['GET', 'POST', 'DELETE'],
 }));
+
 
 // 提供 frontend 文件夹作为静态文件目录
 app.use(express.static(path.join(__dirname, '../frontend')));
