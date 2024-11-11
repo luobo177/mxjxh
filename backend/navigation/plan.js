@@ -7,7 +7,7 @@ router.post('/tasks', (req, res) => {
     const { id, event, remark, deadline } = req.body;
 
     // 插入任务的 SQL 语句
-    const addTask = 'INSERT INTO Task (id, event, remark, deadline) VALUES (?, ?, ?, ?)';//这里的id为userid
+    const addTask = 'INSERT INTO task (id, event, remark, deadline) VALUES (?, ?, ?, ?)';//这里的id为userid
 
     db.query(addTask, [id, event, remark, deadline], (err, result) => {
         if (err) {
@@ -22,7 +22,7 @@ router.post('/tasks', (req, res) => {
 // 获取所有任务计划
 router.get('/getPlan', (req, res) => {
     // 查询所有任务的 SQL 语句
-    const getPlans = 'SELECT * FROM Task where id=?';
+    const getPlans = 'SELECT * FROM task where id=?';
     const id = req.query.id;
     db.query(getPlans,[id], (err, results) => {
         if (err) {
