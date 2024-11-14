@@ -1,0 +1,1 @@
+每次提交到服务器之后，记得把config.js替换为'https://cuitmxjxh.top'
