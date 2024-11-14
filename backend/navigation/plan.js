@@ -52,13 +52,13 @@ router.delete('/deleteTask', (req, res) => {
     db.query(deleteTask, [eventid], (err, result) => {
         if (err) {
             console.error('删除错误:', err);
-            return res.status(500).json({ message: '删除任务时发生错误' });
+            return res.status(500).json({ message: 'fault' });
         }
 
         if (result.affectedRows > 0) {
-            return res.status(200).json({ message: '任务删除成功' });
+            return res.status(200).json({ message: 'success' });
         } else {
-            return res.status(404).json({ message: '任务未找到' });
+            return res.status(404).json({ message: 'no found' });
         }
     });
 });
